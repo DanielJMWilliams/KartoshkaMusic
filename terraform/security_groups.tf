@@ -1,23 +1,3 @@
-resource "aws_security_group" "rds_sg" {
-  name = "rds-sg"
-  vpc_id = aws_vpc.main.id
-
-  ingress {
-    from_port       = var.rds_port
-    to_port         = var.rds_port
-    protocol        = "tcp"
-    //cidr_blocks = [ "0.0.0.0/0" ] // this allows all ips to connect to db.
-    security_groups = [aws_security_group.ecs.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_security_group" "ecs" {
   name = "ecs-sg"
   description = "Allow traffic from ALB to ECS services"
