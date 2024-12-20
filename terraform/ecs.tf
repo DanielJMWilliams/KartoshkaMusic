@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "app" {
       },
       {
         name  = "SPOTIFY_REDIRECT_URI"
-        value = "http://localhost:8000/callback"
+        value = "https://www.danielspyros.com/callback"
       },
       {
         name  = "SPOTIFY_LOGIN_SCOPE"
@@ -81,13 +81,13 @@ resource "aws_ecs_service" "app" {
   launch_type             = "FARGATE"
   enable_execute_command  = true
 
-/*
+
   load_balancer {
-    target_group_arn = aws_lb_target_group.app.arn
+    target_group_arn = aws_lb_target_group.web_tg.arn
     container_name = var.app_container_name
     container_port = 80
   }
-  */
+  
 
   network_configuration {
     subnets           = [aws_subnet.public1.id]

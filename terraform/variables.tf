@@ -38,3 +38,7 @@ variable "rds_port" {
 variable "app_image_url"{
   description= "The application image url for ecs."
 }
+
+variable "app_container_name"{
+  description= "The application container name."
+}

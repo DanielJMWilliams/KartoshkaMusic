@@ -26,7 +26,10 @@ SECRET_KEY = config('DJANGO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [    
+    'www.danielspyros.com',
+    'danielspyros.com'
+    ]
 
 
 # Application definition
