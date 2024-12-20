@@ -29,7 +29,8 @@ DEBUG = config('DEBUG')
 ALLOWED_HOSTS = [    
     'www.danielspyros.com',
     'danielspyros.com',
-    "10.0.0.*",  # Allow any internal IP in the 10.0.0.0/24 subnet.
+    #"10.0.0.*",  # Allow any internal IP in the 10.0.0.0/24 subnet.
+    "web-lb-847508913.eu-west-2.elb.amazonaws.com"#load balancer dns name.
     ]
 
 if(DEBUG):
