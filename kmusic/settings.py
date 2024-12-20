@@ -28,8 +28,12 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = [    
     'www.danielspyros.com',
-    'danielspyros.com'
+    'danielspyros.com',
+    "10.0.0.*",  # Allow any internal IP in the 10.0.0.0/24 subnet.
     ]
+
+if(DEBUG):
+    ALLOWED_HOSTS.append("localhost")
 
 
 # Application definition
