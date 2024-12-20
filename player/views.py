@@ -12,6 +12,11 @@ from urllib.parse import urlencode
 from .SpotifyAuth import SpotifyAuth
 from .SongQueue import SongQueue
 
+from django.http import JsonResponse
+
+def health_check(request):
+    return JsonResponse({'status': 'healthy'})
+
 # Create your views here.
 
 def index(request):

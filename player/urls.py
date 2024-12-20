@@ -12,4 +12,5 @@ urlpatterns = [
     path('getCurrentSongInfo_HTTP_RES', views.getCurrentSongInfo_HTTP_RES, name="getCurrentSongInfo_HTTP_RES"),
     path('getCurrentSongID', views.getCurrentSongID, name="getCurrentSongID"),
     path('like_song/<str:song_id>', views.like_song, name="like_song"),
+    path('health', views.health_check), 
 ]
