@@ -6,16 +6,14 @@ I made this web-app because I did not like the Spotify UI displaying information
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [License](#license)
-- [Screenshots/Demos](#screenshots-demos)
-- [Updates and Version History](#updates-and-version-history)
-- [Frequently Asked Questions (FAQ)](#frequently-asked-questions)
+- [Screenshots](#screenshots)
+- [Deployment](#deployment)
+- [Development](#development)
 - [Feature Wishlist](#feature-wishlist)
 - [Known Issues](#known-issues)
 - [Contact Information](#contact-information)
 
-## Screenshots/Demos
+## Screenshots
 
 ![Image](/images/kartoshka_music.jpeg)
 
