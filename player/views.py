@@ -19,6 +19,7 @@ def health_check(request):
 # Create your views here.
 
 def index(request):
+    print("index")
     params = {
         "client_id": SpotifyAuth.getSpotifyId(),
         "response_type": "code",

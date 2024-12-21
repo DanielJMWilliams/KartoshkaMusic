@@ -41,25 +41,29 @@ class SpotifyAuth():
     def getSpotifySecret():
         try:
             return config('SPOTIFY_CLIENT_SECRET')
-        except:
+        except Exception as e:
+            print(e)
             raise "Missing Config - SPOTIFY_CLIENT_SECRET not set in environment variables."
         
     def getSpotifyId():
         try:
             return config('SPOTIFY_CLIENT_ID')
-        except:
+        except Exception as e:
+            print(e)
             raise "Missing Config - SPOTIFY_CLIENT_ID not set in environment variables."
     
     def getSpotifyRedirectUri():
         try:
             return config("SPOTIFY_REDIRECT_URI")
-        except:
+        except Exception as e:
+            print(e)
             raise "Missing Config - SPOTIFY_REDIRECT_URI not set in environment variables."
         
     def getSpotifyLoginScope():
         try:
             return config("SPOTIFY_LOGIN_SCOPE")
-        except:
+        except Exception as e:
+            print(e)
             raise "Missing Config - SPOTIFY_LOGIN_SCOPE not set in environment variables."
 
     def getAccessToken(self):

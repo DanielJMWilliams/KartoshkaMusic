@@ -13,6 +13,7 @@ COPY . /app/
 
 RUN python manage.py collectstatic --noinput
 
-CMD gunicorn kmusic.wsgi:application --bind 0.0.0.0:8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD gunicorn kmusic.wsgi:application --bind 0.0.0.0:8000
 
 EXPOSE 8000
