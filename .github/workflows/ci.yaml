@@ -2,12 +2,10 @@ name: Build App
 on:
   push:
     branches: 
-      - main
-        aws
+      - deploy
   pull_request:
     branches:
-      - main
-        aws
+      - deploy
 
 
 jobs: 
@@ -17,6 +15,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+      AWS_REGION: ${{secrets.AWS_REGION}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -24,7 +23,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with: 
-          python-version: "3.11"
+          python-version: "3.13"
       
       - name: Build Tag and Push to ECR
         run: |
@@ -32,3 +31,29 @@ jobs:
           docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${IMAGE_NAME}:latest .
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${IMAGE_NAME}:latest
 
+  update-task-definition:
+    needs: build-tag-push
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{secrets.AWS_REGION}}
+    steps:
+      - name: Update ECS Task Definition
+        run: |
+          CURRENT_TASK_DEF=$(aws ecs describe-task-definition --task-definition app)
+          NEW_TASK_DEF=$(echo $CURRENT_TASK_DEF | jq '.taskDefinition | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)')
+          aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEF"
+
+
+  redeploy-ecs-service:
+    needs: update-task-definition
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{secrets.AWS_REGION}}
+    steps:
+      - name: Redeploy ECS Service
+        run: |
+          aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER_NAME }} --service ${{ secrets.ECS_SERVICE_NAME }} --force-new-deployment --region ${{ secrets.AWS_REGION }}

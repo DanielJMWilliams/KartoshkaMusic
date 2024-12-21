@@ -12,6 +12,11 @@ from urllib.parse import urlencode
 from .SpotifyAuth import SpotifyAuth
 from .SongQueue import SongQueue
 
+from django.http import JsonResponse
+
+def health_check(request):
+    return JsonResponse({'status': 'healthy'})
+
 # Create your views here.
 
 def index(request):
@@ -22,18 +27,18 @@ def index(request):
         "scope": config("SPOTIFY_LOGIN_SCOPE"),
         "show_dialog": "true",
     }
-
-    if getAuth(request)==None:
+    auth = getAuth(request)
+    if auth==None:
         context={
             "loggedOut" : True,
             "login_link": f"https://accounts.spotify.com/en/authorize?{urlencode(params)}"
         }
         return render(request, "player/index.html", context)
-    playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": getAuth(request)})
+    playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
     if playerResponse.status_code==204:
         return render(request, "player/index.html", context={"song_title": "No song playing"})
     elif playerResponse.status_code==200:
-        context = getCurrentSongInfo(request)
+        context = getCurrentSongInfo(request, auth)
         return render(request, "player/index.html", context)
     else:
         return HttpResponse("Spotify API returned status"+playerResponse.status_code)
@@ -89,8 +94,8 @@ def getSongQueue(request):
         sq = SongQueue(length=sq_json["length"],head=sq_json["head"],queue=sq_json["queue"])
     return sq
 
-def isSongPaused(request):
-    res1 = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": getAuth(request)})
+def isSongPaused(request, auth):
+    res1 = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
     if res1.status_code==204:
         #no song playing / spotify closed
         return True
@@ -98,7 +103,7 @@ def isSongPaused(request):
     before = playerJson["progress_ms"]
     #wait so song can progress and spotify update
     time.sleep(0.5)
-    artistResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": getAuth(request)})
+    artistResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
     artistJson = json.loads(artistResponse.text)
     after = artistJson["progress_ms"]
     if after-before > 0:
@@ -107,23 +112,27 @@ def isSongPaused(request):
         return True
 
 def getCurrentSongInfo_HTTP_RES(request):
-    return HttpResponse(json.dumps(getCurrentSongInfo(request)))
+    auth = getAuth(request)
+    return HttpResponse(json.dumps(getCurrentSongInfo(request, auth)))
 
 def getCurrentSongID(request):
-    playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": getAuth(request)})
+    auth = getAuth(request)
+    playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
     playerJson = json.loads(playerResponse.text)
     data = {
         "song_id" : playerJson["item"]["id"],
         "song_progress" : playerJson["progress_ms"],
-        "isPaused": isSongPaused(request),
+        "isPaused": isSongPaused(request, auth),
     }
     return HttpResponse(json.dumps(data))
 
-def getCurrentSongInfo(request):
-    isPaused = isSongPaused(request)
-    playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": getAuth(request)})
+def getCurrentSongInfo(request, auth):
+    isPaused = isSongPaused(request, auth)
+    playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
+    if playerResponse.status_code != 200:
+        return HttpResponse("Bad response", 500 )
     playerJson = json.loads(playerResponse.text)
-    isLiked = checkLiked(request, playerJson["item"]["id"])
+    isLiked = checkLiked(request, playerJson["item"]["id"], auth)
     likedClass="not-liked"
     if isLiked:
         likedClass="liked"
@@ -132,7 +141,7 @@ def getCurrentSongInfo(request):
     sq.addItem(playerJson["item"]["album"]["images"][0]["url"])
     request.session["songqueue"] = sq.toJSON()
     artist_id = playerJson["item"]["artists"][0]["id"]
-    artistResponse = requests.get("https://api.spotify.com/v1/artists/"+artist_id, headers={"Authorization":  getAuth(request)})
+    artistResponse = requests.get("https://api.spotify.com/v1/artists/"+artist_id, headers={"Authorization":  auth})
     artistJson = json.loads(artistResponse.text)
     data = {
         "song_id" : playerJson["item"]["id"],
@@ -149,9 +158,9 @@ def getCurrentSongInfo(request):
     }
     return data
 
-def checkLiked(request, song_id):
+def checkLiked(request, song_id, auth):
     url = "https://api.spotify.com/v1/me/tracks/contains?ids="+song_id
-    res = requests.get(url, headers={"Authorization": getAuth(request)})
+    res = requests.get(url, headers={"Authorization": auth})
     print(res.status_code)
     if res.status_code==200:
         playerJson = json.loads(res.text)
