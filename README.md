@@ -15,11 +15,24 @@ I made this web-app because I did not like the Spotify UI displaying information
 - [Known Issues](#known-issues)
 - [Contact Information](#contact-information)
 
+## Screenshots/Demos
 
-## Installation
+![Image](/images/kartoshka_music.jpeg)
+
+## Development
 
 ### First Time Set Up
+
+#### Run with docker compose.
+
+`docker compose up -d --build`
+
+
+#### Run locally in virtual enviroment
 1. Create Virtual Environment
+
+`python3 -m venv venv`
+
 2. Activate virtual environment
 
 `venv\Scripts\Activate.ps1` 
@@ -42,10 +55,6 @@ Spotify Client ID and Client Secret can be obtained here: https://developer.spot
 ### Running app
 1. Activate Virtual Environment
 2. ```python manage.py runserver```
-
-## Screenshots/Demos
-
-![Image](/images/kartoshka_music.jpeg)
 
 ## Feature Wishlist
 
