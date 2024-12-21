@@ -6,20 +6,52 @@ I made this web-app because I did not like the Spotify UI displaying information
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [License](#license)
-- [Screenshots/Demos](#screenshots-demos)
-- [Updates and Version History](#updates-and-version-history)
-- [Frequently Asked Questions (FAQ)](#frequently-asked-questions)
+- [Screenshots](#screenshots)
+- [Deployment](#deployment)
+- [Development](#development)
 - [Feature Wishlist](#feature-wishlist)
 - [Known Issues](#known-issues)
 - [Contact Information](#contact-information)
 
+## Screenshots
 
-## Installation
+![Image](/images/kartoshka_music.jpeg)
 
-### First Time Set Up
+## Deployment
+
+The aws configuration is defined with terraform. Pushing or completing a PR into the `deploy` branch will trigger a GitHub action that will deploy the code to https://www.danielspyros.com/.
+
+### Terraform in a docker container
+
+1. Setup the terraform container.
+
+e.g.
+``docker run -dit --name terraform-container -v C:\Users\danca\Documents\projects\KartoshkaMusic\terraform:/terraform hashicorp/terraform:latest console``
+Note: you will need to replace the path with the path to that terraform folder on your computer.
+
+2. Set environment variables in terraform docker container. Obtain these from the aws console.
+`export AWS_SECRET_ACCESS_KEY=xyz`
+`export AWS_ACCESS_KEY_ID=xyz`
+
+3. `terraform plan`
+
+4. `terraform apply`
+
+## Development
+
+
+### Run with docker compose.
+1. Setup `secrets.env` file. Use `secrets.example.env` as a template.
+2. Docker compose.
+
+`docker compose up -d --build`
+
+
+### Run locally in virtual enviroment
 1. Create Virtual Environment
+
+`python -m venv venv`
+
 2. Activate virtual environment
 
 `venv\Scripts\Activate.ps1` 
@@ -39,13 +71,9 @@ pip install -r requirements.txt
 
 Spotify Client ID and Client Secret can be obtained here: https://developer.spotify.com/dashboard/.
 
-### Running app
-1. Activate Virtual Environment
-2. ```python manage.py runserver```
+5. Run server
 
-## Screenshots/Demos
-
-![Image](/images/kartoshka_music.jpeg)
+`python manage.py runserver`
 
 ## Feature Wishlist
 
@@ -55,24 +83,15 @@ A list of ideas and features that may be considered for future development.
 
 Ideas:
 
-grey song progess bar fills up
-
-hover over album to enlarge and get info
-
-click mini album to remove from queue?
-
-When playing multiple songs from one album consecutively, add number to mini album to indicate how many have already played. hovering over shows which songs in what order
+- grey song progess bar fills up
+- hover over album to enlarge and get info
+- click mini album to remove from queue?
+- When playing multiple songs from one album consecutively, add number to mini album to indicate how many have already played. hovering over shows which songs in what order
 
 ## Known Issues
-album art too big for small screen
-
-pause icon not central
-
-background band photo needs height to be increased to 100% of main section
+- album art too big for small screen
+- pause icon not central
+- background band photo needs height to be increased to 100% of main section
 
 ## Contact Information
 Contact me on LinkedIn: www.linkedin.com/in/daniel-williams-5a74a71b0
-
-## Deployment
-
-https://www.danielspyros.com/

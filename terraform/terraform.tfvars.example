@@ -1,0 +1,4 @@
+//Copy this into a file called terraform.tfvars. Edit the values as necessary.
+aws_region = "eu-west-2"
+app_image_url         = "123456789123456789.dkr.ecr.eu-west-2.amazonaws.com/kmusic-app:latest"
+app_container_name = "kmusicApp"
