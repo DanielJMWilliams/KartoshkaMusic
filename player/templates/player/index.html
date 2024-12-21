@@ -13,6 +13,13 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'player/css/styles.css' %}">
 
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'player/images/apple-touch-icon.png' %}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'player/images/favicon-32x32.png' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'player/images/favicon-16x16.png' %}">
+	<link rel="manifest" href="{% static 'player/images/site.webmanifest' %}">
+	
+
+
 	{% if loggedOut %}
 	{% else %}
 		<script src="{% static 'player/js/player.js' %}"></script>

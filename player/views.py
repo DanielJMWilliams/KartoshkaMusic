@@ -112,7 +112,8 @@ def isSongPaused(request, auth):
         return True
 
 def getCurrentSongInfo_HTTP_RES(request):
-    return HttpResponse(json.dumps(getCurrentSongInfo(request)))
+    auth = getAuth(request)
+    return HttpResponse(json.dumps(getCurrentSongInfo(request, auth)))
 
 def getCurrentSongID(request):
     auth = getAuth(request)

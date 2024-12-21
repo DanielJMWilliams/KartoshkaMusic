@@ -3,6 +3,8 @@ __pycache__
 kmusic/__pycache__
 player/__pycache__
 
+/staticfiles
+
 .env
 secrets.env
 
@@ -16,3 +18,5 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.80.0/linux_
 terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.80.0/linux_amd64/terraform-provider-aws_v5.80.0_x5
 terraform/.terraform.lock.hcl
 terraform/.terraform.tfstate.lock.info
+
+
