@@ -130,8 +130,6 @@ def getCurrentSongID(request):
 def getCurrentSongInfo(request, auth):
     isPaused = isSongPaused(request, auth)
     playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
-    if playerResponse.status_code != 200:
-        return HttpResponse("Bad response", 500 )
     playerJson = json.loads(playerResponse.text)
     isLiked = checkLiked(request, playerJson["item"]["id"], auth)
     likedClass="not-liked"

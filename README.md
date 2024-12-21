@@ -23,16 +23,33 @@ I made this web-app because I did not like the Spotify UI displaying information
 
 The aws configuration is defined with terraform. Pushing or completing a PR into the `deploy` branch will trigger a GitHub action that will deploy the code to https://www.danielspyros.com/.
 
+### Terraform in a docker container
+
+1. Setup the terraform container.
+
+e.g.
+``docker run -dit --name terraform-container -v C:\Users\danca\Documents\projects\KartoshkaMusic\terraform:/terraform hashicorp/terraform:latest console``
+Note: you will need to replace the path with the path to that terraform folder on your computer.
+
+2. Set environment variables in terraform docker container. Obtain these from the aws console.
+`export AWS_SECRET_ACCESS_KEY=xyz`
+`export AWS_ACCESS_KEY_ID=xyz`
+
+3. `terraform plan`
+
+4. `terraform apply`
+
 ## Development
 
-### First Time Set Up
 
-#### Run with docker compose.
+### Run with docker compose.
+1. Setup `secrets.env` file. Use `secrets.example.env` as a template.
+2. Docker compose.
 
 `docker compose up -d --build`
 
 
-#### Run locally in virtual enviroment
+### Run locally in virtual enviroment
 1. Create Virtual Environment
 
 `python -m venv venv`
