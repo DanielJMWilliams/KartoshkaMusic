@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: Update ECS Task Definition
         run: |
-          CURRENT_TASK_DEF=$(aws ecs describe-task-definition --task-definition ${{ vars.IMAGE_NAME }})
+          CURRENT_TASK_DEF=$(aws ecs describe-task-definition --task-definition app)
           NEW_TASK_DEF=$(echo $CURRENT_TASK_DEF | jq '.taskDefinition | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)')
           aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEF"
 
