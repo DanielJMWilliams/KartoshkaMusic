@@ -26,15 +26,14 @@ SECRET_KEY = config('DJANGO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = [    
-    'www.danielspyros.com',
-    'danielspyros.com',
-    #"10.0.0.*",  # Allow any internal IP in the 10.0.0.0/24 subnet.
-    "web-lb-847508913.eu-west-2.elb.amazonaws.com"#load balancer dns name.
-    ]
 
-if(DEBUG):
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(",")
+
+if DEBUG:
     ALLOWED_HOSTS.append("localhost")
+else:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
 
 
 # Application definition

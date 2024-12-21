@@ -45,6 +45,10 @@ resource "aws_ecs_task_definition" "app" {
       {
         name  = "SPOTIFY_LOGIN_SCOPE"
         value = "user-modify-playback-state user-read-playback-state user-read-recently-played user-read-currently-playing user-library-read user-library-modify"
+      },
+      {
+        name="ALLOWED_HOSTS"
+        value = "www.danielspyros.com,danielspyros.com,web-lb-847508913.eu-west-2.elb.amazonaws.com"
       }
     ]
     secrets = [
