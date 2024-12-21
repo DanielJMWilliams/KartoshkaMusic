@@ -38,6 +38,30 @@ class SpotifyAuth():
         accessToken=self.getAccessToken()
         return "Bearer " + accessToken
 
+    def getSpotifySecret():
+        try:
+            return config('SPOTIFY_CLIENT_SECRET')
+        except:
+            raise "Missing Config - SPOTIFY_CLIENT_SECRET not set in environment variables."
+        
+    def getSpotifyId():
+        try:
+            return config('SPOTIFY_CLIENT_ID')
+        except:
+            raise "Missing Config - SPOTIFY_CLIENT_ID not set in environment variables."
+    
+    def getSpotifyRedirectUri():
+        try:
+            return config("SPOTIFY_REDIRECT_URI")
+        except:
+            raise "Missing Config - SPOTIFY_REDIRECT_URI not set in environment variables."
+        
+    def getSpotifyLoginScope():
+        try:
+            return config("SPOTIFY_LOGIN_SCOPE")
+        except:
+            raise "Missing Config - SPOTIFY_LOGIN_SCOPE not set in environment variables."
+
     def getAccessToken(self):
         now = datetime.datetime.now()
 
@@ -49,14 +73,14 @@ class SpotifyAuth():
         # Set up headers for token requests
         headers = {
             "Authorization": "Basic " + base64.b64encode(
-                f"{config('SPOTIFY_CLIENT_ID')}:{config('SPOTIFY_CLIENT_SECRET')}".encode()
+                f"{SpotifyAuth.getSpotifyId()}:{SpotifyAuth.getSpotifySecret()}".encode()
             ).decode("utf-8"),
             "content-type": "application/x-www-form-urlencoded",
         }
 
         # Initialize payload
         payload = {
-            "redirect_uri": config("SPOTIFY_REDIRECT_URI"),
+            "redirect_uri": SpotifyAuth.getSpotifyRedirectUri(),
         }
 
         # Check whether to use authorization_code or refresh_token flow

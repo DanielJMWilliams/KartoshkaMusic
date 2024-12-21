@@ -6,7 +6,6 @@ from django.core import serializers
 import requests
 import json
 import time
-from decouple import config
 from urllib.parse import urlencode
 
 from .SpotifyAuth import SpotifyAuth
@@ -21,10 +20,10 @@ def health_check(request):
 
 def index(request):
     params = {
-        "client_id": config("SPOTIFY_CLIENT_ID"),
+        "client_id": SpotifyAuth.getSpotifyId(),
         "response_type": "code",
-        "redirect_uri": config("SPOTIFY_REDIRECT_URI"),
-        "scope": config("SPOTIFY_LOGIN_SCOPE"),
+        "redirect_uri": SpotifyAuth.getSpotifyRedirectUri(),
+        "scope": SpotifyAuth.getSpotifyLoginScope(),
         "show_dialog": "true",
     }
     auth = getAuth(request)
@@ -113,6 +112,8 @@ def isSongPaused(request, auth):
 
 def getCurrentSongInfo_HTTP_RES(request):
     auth = getAuth(request)
+    if auth==None:
+        return JsonResponse({'status': 'unauthenticated'})
     return HttpResponse(json.dumps(getCurrentSongInfo(request, auth)))
 
 def getCurrentSongID(request):
@@ -129,8 +130,6 @@ def getCurrentSongID(request):
 def getCurrentSongInfo(request, auth):
     isPaused = isSongPaused(request, auth)
     playerResponse = requests.get("https://api.spotify.com/v1/me/player", headers={"Authorization": auth})
-    if playerResponse.status_code != 200:
-        return HttpResponse("Bad response", 500 )
     playerJson = json.loads(playerResponse.text)
     isLiked = checkLiked(request, playerJson["item"]["id"], auth)
     likedClass="not-liked"
