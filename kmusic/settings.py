@@ -32,12 +32,11 @@ if DEBUG:
     print("DEBUG MODE")
     ALLOWED_HOSTS.append("127.0.0.1")
     ALLOWED_HOSTS.append("localhost")
-    SECURE_SSL_REDIRECT= False
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
+    #SECURE_SSL_REDIRECT = True
 
 
 
