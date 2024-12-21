@@ -27,7 +27,7 @@ SECRET_KEY = config('DJANGO_SECRET')
 DEBUG = config('DEBUG')
 
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(",")
+ALLOWED_HOSTS = ["*"]
 
 if DEBUG:
     ALLOWED_HOSTS.append("localhost")
