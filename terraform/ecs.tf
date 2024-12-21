@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "app" {
       },
       {
         name="ALLOWED_HOSTS"
-        value = "www.danielspyros.com,danielspyros.com,web-lb-847508913.eu-west-2.elb.amazonaws.com"
+        value = "www.danielspyros.com,danielspyros.com,web-lb-847508913.eu-west-2.elb.amazonaws.com,${aws_lb.web_lb.dns_name},10.0.0.*"
       }
     ]
     secrets = [
