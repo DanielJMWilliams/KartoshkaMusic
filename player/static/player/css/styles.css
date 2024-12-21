@@ -2,8 +2,8 @@
   width: 100%;
   height: 15%;
   background: #1f2326;
-  position: absolute;
-  top: 85%;
+  position: fixed;
+  bottom: 0;
 }
 
 #middle-section {
@@ -11,7 +11,7 @@
   height: 85%;
   background: #343a40;
   float: left;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   display: flex;
 
