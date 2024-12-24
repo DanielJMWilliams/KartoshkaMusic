@@ -19,7 +19,7 @@ I made this web-app because I did not like the Spotify UI displaying information
 
 ## Deployment
 
-The aws configuration is defined with terraform. Pushing or completing a PR into the `deploy` branch will trigger a GitHub action that will deploy the code to https://www.danielspyros.com/.
+The aws configuration is defined with terraform. Pushing or completing a PR into the `deploy` branch will trigger a GitHub action that will deploy the code to https://kmusic.danielspyros.com/.
 
 ### Terraform in a docker container
 

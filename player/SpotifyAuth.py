@@ -108,8 +108,6 @@ class SpotifyAuth():
                 raise Exception(f"Failed to fetch new token. Status code: {response.status_code}. Error: {response.text}")
 
             res_json = response.json()
-            print("Obtained new token, response:", res_json)
-
             # Update the token details
             self.expiry_time = self.calculateExpiryTime(res_json["expires_in"])
             self.access_token = res_json["access_token"]

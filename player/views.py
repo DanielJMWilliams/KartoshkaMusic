@@ -160,7 +160,6 @@ def getCurrentSongInfo(request, auth):
 def checkLiked(request, song_id, auth):
     url = "https://api.spotify.com/v1/me/tracks/contains?ids="+song_id
     res = requests.get(url, headers={"Authorization": auth})
-    print(res.status_code)
     if res.status_code==200:
         playerJson = json.loads(res.text)
         return playerJson[0]

@@ -65,7 +65,7 @@ resource "aws_route53_zone" "web_zone" {
 */
 resource "aws_route53_record" "web_dns" {
   zone_id = data.aws_route53_zone.web_zone.zone_id
-  name    = "www"
+  name    = "kmusic"
   type    = "A"
 
   alias {
@@ -76,6 +76,6 @@ resource "aws_route53_record" "web_dns" {
 }
 
 data "aws_acm_certificate" "example" {
-  domain   = "www.danielspyros.com"
+  domain   = "*.danielspyros.com"
   statuses = ["ISSUED"]
 }

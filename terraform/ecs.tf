@@ -36,11 +36,11 @@ resource "aws_ecs_task_definition" "app" {
     environment = [
       {
         name  = "DEBUG"
-        value = "false"
+        value = "true"
       },
       {
         name  = "SPOTIFY_REDIRECT_URI"
-        value = "https://www.danielspyros.com/callback"
+        value = "https://kmusic.danielspyros.com/callback"
       },
       {
         name  = "SPOTIFY_LOGIN_SCOPE"
@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "app" {
       },
       {
         name="ALLOWED_HOSTS"
-        value = "www.danielspyros.com,danielspyros.com,web-lb-847508913.eu-west-2.elb.amazonaws.com,${aws_lb.web_lb.dns_name},10.0.0.*"
+        value = "kmusic.danielspyros.com,danielspyros.com,web-lb-847508913.eu-west-2.elb.amazonaws.com,${aws_lb.web_lb.dns_name},10.0.0.*"
       }
     ]
     secrets = [

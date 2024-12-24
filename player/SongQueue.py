@@ -34,7 +34,6 @@ class SongQueue():
         h = self.head % len(self.queue)
         q = []
         for i in range(0, len(self.queue)):
-            #print("h: ", h)
             q.append(self.queue[h])
             h+=1
             h = h % len(self.queue)
