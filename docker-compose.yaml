@@ -4,7 +4,7 @@ services:
       context: .
     container_name: kmusic-app
     volumes:
-      - ./staticfiles:/app/staticfiles # map source code to allow for hot reload
+      - ./staticfiles:/staticfiles # map source code to allow for hot reload
     env_file:
       - defaults.env
       - secrets.env
