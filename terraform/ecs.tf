@@ -84,6 +84,7 @@ resource "aws_ecs_service" "app" {
   desired_count           = 1
   launch_type             = "FARGATE"
   enable_execute_command  = true
+  force_new_deployment = true  # This forces a new deployment even if no changes are detected
 
 
   load_balancer {

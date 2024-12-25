@@ -3,7 +3,7 @@ __pycache__
 kmusic/__pycache__
 player/__pycache__
 
-/staticfiles
+/static
 
 .env
 secrets.env
