@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "app" {
     environment = [
       {
         name  = "DEBUG"
-        value = "true"
+        value = "false"
       },
       {
         name  = "SPOTIFY_REDIRECT_URI"
