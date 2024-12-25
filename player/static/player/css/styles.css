@@ -90,11 +90,13 @@ body {
   color: white;
   font-weight: bold;
   margin-top: 4px;
+  font-size: 6vh;
 }
 
 #song-artist {
   color: rgb(210,210,210);
   font-weight: bold;
+  font-size: 5vh;
 }
 
 #current-album {
@@ -223,13 +225,13 @@ body {
 #like-btn {
   position: absolute;
   top: 50%;
-  margin-top: -25px;
+  margin-top: -3vh;
   left: 5%;
   z-index: 2;
 }
 
 #like-btn i {
-  font-size: 50px;
+  font-size: 6vh;
 }
 
 .liked {
@@ -251,8 +253,11 @@ body {
 }
 
 #links-box{
-  padding-left: 5px;
-  padding-top: 5px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 5px;
+  padding-bottom: 5px;
   z-index: 100;
 }
 
