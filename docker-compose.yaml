@@ -4,7 +4,7 @@ services:
       context: .
     container_name: kmusic-app
     volumes:
-      - ./staticfiles:/staticfiles # map source code to allow for hot reload
+      - ./staticfiles:/app/staticfiles # map source code to allow for hot reload
     env_file:
       - defaults.env
       - secrets.env
@@ -16,6 +16,6 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./staticfiles:/staticfiles:ro
+      - ./staticfiles:/app/staticfiles:ro
     depends_on:
       - kmusic-app
