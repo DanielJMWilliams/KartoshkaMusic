@@ -5,17 +5,9 @@ services:
     container_name: kmusic-app
     volumes:
       - ./static:/app/static # map source code to allow for hot reload
+    ports:
+      - 8000:8000
     env_file:
       - defaults.env
       - secrets.env
     
-  nginx-proxy:
-    image: nginx:latest
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./static:/app/static:ro
-    depends_on:
-      - kmusic-app

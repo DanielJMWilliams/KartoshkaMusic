@@ -4,6 +4,7 @@ kmusic/__pycache__
 player/__pycache__
 
 /static
+/staticfiles
 
 .env
 secrets.env
